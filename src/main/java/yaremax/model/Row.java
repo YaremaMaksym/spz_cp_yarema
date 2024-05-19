@@ -4,27 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Row {
-    private Map<String, Object> values;
+    private Map<Column, Object> values;
 
     public Row() {
         this.values = new HashMap<>();
     }
 
-    public void setValue(String columnName, Object value, DataType dataType) throws IllegalArgumentException {
-        if (dataType.isValidValue(value)) {
-            values.put(columnName, value);
+    public void setValue(Column column, Object value) throws IllegalArgumentException {
+        if (column.getDataType().isValidValue(value)) {
+            values.put(column, value);
         }
-        else throw new IllegalArgumentException("Invalid value for column: " + columnName);
+        else throw new IllegalArgumentException("Invalid value for column: " + column.getName());
     }
 
-    public Object getValue(String columnName) {
-        return values.get(columnName);
+    public Map<Column, Object> getValues() {
+        return values;
     }
 
-    public String formatValue(String columnName, DataType dataType) {
-        Object value = values.get(columnName);
+    public String formatValue(Column column) {
+        Object value = values.get(column);
         if (value != null) {
-            return dataType.formatValue(value);
+            return column.getDataType().formatValue(value);
         }
         return "NULL";
     }
