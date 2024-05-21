@@ -28,7 +28,7 @@ public class RowManager {
 
         Iterator<Column> columnIterator = row.getValues().keySet().iterator();
         while (columnIterator.hasNext()) {
-            query.append(row.formatValue(columnIterator.next()));
+            query.append(row.getFormatedValue(columnIterator.next()));
             if (columnIterator.hasNext()) query.append(", ");
         }
 
@@ -46,7 +46,7 @@ public class RowManager {
         Iterator<Column> columnIterator = row.getValues().keySet().iterator();
         while (columnIterator.hasNext()) {
             Column column = columnIterator.next();
-            query.append(column.getName()).append(" = ").append(row.formatValue(column));
+            query.append(column.getName()).append(" = ").append(row.getFormatedValue(column));
             if (columnIterator.hasNext()) query.append(", ");
         }
 

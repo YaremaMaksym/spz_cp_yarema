@@ -2,7 +2,8 @@ package yaremax.model;
 
 import lombok.Getter;
 
-import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Getter
 public enum DataType {
@@ -13,8 +14,13 @@ public enum DataType {
         }
 
         @Override
-        public String formatValue(Object value) {
+        public String formatValueToSqlLiteral(Object value) {
             return value.toString();
+        }
+
+        @Override
+        public Object parseFromString(String value) {
+            return Integer.parseInt(value);
         }
     },
     BIGINT("BIGINT") {
@@ -24,19 +30,13 @@ public enum DataType {
         }
 
         @Override
-        public String formatValue(Object value) {
+        public String formatValueToSqlLiteral(Object value) {
             return value.toString();
-        }
-    },
-    NUMERIC("NUMERIC") {
-        @Override
-        public boolean isValidValue(Object value) {
-            return value instanceof BigDecimal;
         }
 
         @Override
-        public String formatValue(Object value) {
-            return value.toString();
+        public Object parseFromString(String value) {
+            return Long.parseLong(value);
         }
     },
     TEXT("TEXT") {
@@ -46,10 +46,16 @@ public enum DataType {
         }
 
         @Override
-        public String formatValue(Object value) {
+        public String formatValueToSqlLiteral(Object value) {
             return "'" + value.toString().replace("'", "''") + "'";
         }
-    },
+
+        @Override
+        public Object parseFromString(String value) {
+            return value;
+        }
+    };
+    /*,
     BOOLEAN("BOOLEAN") {
         @Override
         public boolean isValidValue(Object value) {
@@ -82,7 +88,7 @@ public enum DataType {
         public String formatValue(Object value) {
             return "'" + value.toString() + "'";
         }
-    };
+    }*/
 
     private final String sqlType;
 
@@ -91,6 +97,8 @@ public enum DataType {
     }
 
     public abstract boolean isValidValue(Object value);
+    public abstract String formatValueToSqlLiteral(Object value);
+    public abstract Object parseFromString(String value);
 
     public abstract String formatValue(Object value);
 }

@@ -21,10 +21,10 @@ public class Row {
         return values;
     }
 
-    public String formatValue(Column column) {
+    public String getFormatedValue(Column column) {
         Object value = values.get(column);
         if (value != null) {
-            return column.getDataType().formatValue(value);
+            return column.getDataType().formatValueToSqlLiteral(value);
         }
         return "NULL";
     }
