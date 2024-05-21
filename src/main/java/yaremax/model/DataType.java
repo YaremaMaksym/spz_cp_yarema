@@ -100,5 +100,9 @@ public enum DataType {
     public abstract String formatValueToSqlLiteral(Object value);
     public abstract Object parseFromString(String value);
 
-    public abstract String formatValue(Object value);
+    public static String getDataTypesAsString() {
+        return Arrays.stream(DataType.values())
+                .map(Enum::name)
+                .collect(Collectors.joining(", "));
+    }
 }

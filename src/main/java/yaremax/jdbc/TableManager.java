@@ -2,16 +2,14 @@ package yaremax.jdbc;
 
 import yaremax.model.Column;
 import yaremax.model.DataType;
+import yaremax.model.Row;
 import yaremax.model.Table;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TableManager {
     private DBConnectionManager dbConnectionManager;
@@ -90,7 +88,26 @@ public class TableManager {
         }
     }
 
+    public List<Row> fetchRows(Table table) throws SQLException {
+        List<Row> rows = new ArrayList<>();
+        String query = "SELECT * FROM " + table.getName();
 
+        try (Connection connection = dbConnectionManager.openConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Row row = new Row();
+                for (Column column : table.getColumns()) {
+                    Object value = column.getDataType().parseFromString(resultSet.getString(column.getName()));
+                    row.setValue(column, value);
+                }
+                rows.add(row);
+            }
+        }
+
+        return rows;
+    }
 
     public Set<Column> getColumnsForTable(String tableName) throws SQLException {
         Set<Column> columns = new HashSet<>();
