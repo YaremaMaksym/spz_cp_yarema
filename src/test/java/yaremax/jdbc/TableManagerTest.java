@@ -87,14 +87,14 @@ class TableManagerTest {
         Table table = new Table(TEST_TABLE_NAME, initialColumns);
         tableManager.createTable(table);
 
-        List<Column> addedColumns = new ArrayList<>();
+        Set<Column> addedColumns = new HashSet<>();
         addedColumns.add(column3);
         addedColumns.add(column4);
-        List<Column> removedColumns = new ArrayList<>();
+        Set<Column> removedColumns = new HashSet<>();
         removedColumns.add(column2);
 
         // Act
-        tableManager.alterTable(table, addedColumns, removedColumns);
+        tableManager.alterTable(TEST_TABLE_NAME, addedColumns, removedColumns);
 
         // Assert
         Set<Column> expectedColumns = new HashSet<>();

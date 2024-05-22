@@ -50,8 +50,8 @@ public class TableManager {
         }
     }
 
-    public void alterTable(Table table, List<Column> addedColumns, List<Column> removedColumns) throws SQLException {
-        StringBuilder alterQuery = new StringBuilder("ALTER TABLE " + table.getName());
+    public void alterTable(String tableName, Set<Column> addedColumns, Set<Column> removedColumns) throws SQLException {
+        StringBuilder alterQuery = new StringBuilder("ALTER TABLE " + tableName);
 
         // Process added columns
         if (!addedColumns.isEmpty()) {
