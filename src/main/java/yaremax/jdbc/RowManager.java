@@ -10,9 +10,17 @@ import java.util.Iterator;
 
 public class RowManager {
     private DBConnectionManager dbConnectionManager;
+    private static RowManager instance;
 
-    public RowManager() {
+    private RowManager() {
         this.dbConnectionManager = DBConnectionManager.getInstance();
+    }
+
+    public static RowManager getInstance() {
+        if (instance == null) {
+            instance = new RowManager();
+        }
+        return instance;
     }
 
     public void insertRow(String tableName, Row row) throws SQLException {

@@ -25,8 +25,8 @@ class RowManagerTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        rowManager = new RowManager();
-        tableManager = new TableManager();
+        rowManager = RowManager.getInstance();
+        tableManager = TableManager.getInstance();
         connection = DBConnectionManager.getInstance().openConnection();
 
         Column column1 = new Column("id", DataType.INTEGER);
