@@ -25,7 +25,7 @@ class TableManagerTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        tableManager = new TableManager();
+        tableManager = TableManager.getInstance();
         connection = DBConnectionManager.getInstance().openConnection();
     }
 

@@ -13,9 +13,17 @@ import java.util.*;
 
 public class TableManager {
     private DBConnectionManager dbConnectionManager;
+    private static TableManager instance;
 
-    public TableManager() {
+    private TableManager() {
         this.dbConnectionManager = DBConnectionManager.getInstance();
+    }
+
+    public static TableManager getInstance() {
+        if (instance == null) {
+            instance = new TableManager();
+        }
+        return instance;
     }
 
     public void createTable(Table table) throws SQLException {
