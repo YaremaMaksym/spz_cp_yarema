@@ -117,6 +117,22 @@ public class TableManager {
         return rows;
     }
 
+    public List<String> fetchTableNames() throws SQLException {
+        List<String> tableNames = new ArrayList<>();
+        String query = "SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public';";
+
+        try (Connection connection = dbConnectionManager.openConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                tableNames.add(resultSet.getString("tablename"));
+            }
+        }
+
+        return tableNames;
+    }
+
     public Set<Column> getColumnsForTable(String tableName) throws SQLException {
         Set<Column> columns = new HashSet<>();
 
