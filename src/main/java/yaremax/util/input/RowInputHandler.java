@@ -21,9 +21,8 @@ public class RowInputHandler {
         return instance;
     }
 
-    public Row inputRow(Table table) {
+    public Row inputRow(Set<Column> columns) {
         Row row = new Row();
-        Set<Column> columns = table.getColumns();
 
         for (Column column : columns) {
             String prompt = "Введіть значення для стовпця " + column.getName() + " (" + column.getDataType() + "): ";
