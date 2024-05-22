@@ -11,7 +11,8 @@ public class Row {
     }
 
     public void setValue(Column column, Object value) throws IllegalArgumentException {
-        if (column.getDataType().isValidValue(value)) {
+        if (value == null) values.put(column, null);
+        else if (column.getDataType().isValidValue(value)) {
             values.put(column, value);
         }
         else throw new IllegalArgumentException("Invalid value for column: " + column.getName());
